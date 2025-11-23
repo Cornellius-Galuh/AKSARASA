@@ -23,6 +23,9 @@ logging.basicConfig(
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
+# Vercel serverless handler
+app.config['PROPAGATE_EXCEPTIONS'] = True
+
 # =========================
 # Inisialisasi Gemini API
 # =========================
@@ -136,3 +139,6 @@ if __name__ == '__main__':
     print(f"Server running on port {port}")
     print("=" * 50)
     app.run(debug=False, port=port, host='0.0.0.0')
+
+# Export untuk Vercel
+application = app
