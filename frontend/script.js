@@ -1,7 +1,7 @@
 // API Configuration
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://127.0.0.1:5000'
-    : 'https://your-backend-url.onrender.com'; // Ganti dengan URL backend Anda setelah deploy
+    : ''; // Kosongkan untuk Vercel (same origin)
 
 // Museum Database with detailed info (Multi-language)
 const museumDatabase = {

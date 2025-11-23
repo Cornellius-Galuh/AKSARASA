@@ -13,10 +13,7 @@ Aplikasi panduan audio museum interaktif dengan AI chatbot yang dapat diakses me
 
 ## 🚀 Deploy ke Internet
 
-Aplikasi ini sudah siap untuk di-deploy secara GRATIS!
-
-### Frontend → Netlify (GRATIS)
-### Backend → Render.com (GRATIS)
+Aplikasi ini sudah siap untuk di-deploy secara **GRATIS** menggunakan **Vercel**!
 
 **Baca panduan lengkap di [DEPLOYMENT.md](./DEPLOYMENT.md)**
 
@@ -89,8 +86,7 @@ Demo collections available:
 ## 🌐 Live Demo
 
 Setelah deploy, aplikasi Anda akan dapat diakses di:
-- Frontend: `https://your-app.netlify.app`
-- Backend API: `https://your-app.onrender.com`
+- **URL Vercel**: `https://aksarasa.vercel.app` (ganti dengan URL Anda)
 
 ## 📱 Cara Penggunaan
 
@@ -104,9 +100,9 @@ Setelah deploy, aplikasi Anda akan dapat diakses di:
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
 - **Backend**: Python, Flask
-- **AI**: Google Gemini 2.0 Flash
+- **AI**: Google Gemini 1.5 Flash
 - **TTS**: Google Text-to-Speech (gTTS)
-- **Hosting**: Netlify + Render.com
+- **Hosting**: Vercel (Fullstack)
 
 ## 📄 License
 

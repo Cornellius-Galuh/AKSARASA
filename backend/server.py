@@ -13,8 +13,8 @@ import tempfile
 # =========================
 load_dotenv()
 
+# Logging setup - untuk Vercel gunakan stdout
 logging.basicConfig(
-    filename="chatbot_server.log",
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )

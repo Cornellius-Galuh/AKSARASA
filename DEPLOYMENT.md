@@ -1,217 +1,221 @@
-# 🚀 Panduan Deploy Aksarasa ke Internet
+# 🚀 Deploy Aksarasa ke Vercel (GRATIS & MUDAH!)
 
-Aplikasi Aksarasa terdiri dari 2 bagian:
-1. **Frontend** (HTML/CSS/JS) → Deploy ke **Netlify** 
-2. **Backend** (Python/Flask) → Deploy ke **Render.com** (GRATIS)
+Vercel adalah platform terbaik untuk deploy aplikasi fullstack (frontend + backend) dalam **1 platform**.
 
 ---
 
-## 📋 Persiapan
+## ✅ Keuntungan Vercel:
 
-### 1. Buat Akun (GRATIS)
-- **Netlify**: https://app.netlify.com/signup
-- **Render**: https://dashboard.render.com/register
+- ✅ **Deploy frontend & backend sekaligus** (tidak perlu 2 platform)
+- ✅ **100% GRATIS** untuk personal projects
+- ✅ **Auto SSL/HTTPS** 
+- ✅ **Global CDN** (loading super cepat)
+- ✅ **Auto deploy** setiap push ke GitHub
+- ✅ **No cold start** (tidak sleep seperti Render)
+- ✅ **Custom domain gratis**
 
-### 2. Install Git (jika belum ada)
-Download dari: https://git-scm.com/downloads
+---
 
-### 3. Push ke GitHub
+## 📋 Langkah Deploy ke Vercel
+
+### 1️⃣ Persiapan (5 menit)
+
+#### A. Pastikan sudah push ke GitHub
 ```bash
 cd "d:\AKSARASA WIN\LOMBA2"
-git init
 git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/USERNAME/aksarasa.git
-git push -u origin main
+git commit -m "Ready for Vercel deployment"
+git push origin main
 ```
 
+#### B. Daftar Akun Vercel (GRATIS)
+1. Buka: https://vercel.com/signup
+2. Pilih **"Continue with GitHub"**
+3. Login dengan akun GitHub Anda
+4. Authorize Vercel
+
 ---
 
-## 🎯 LANGKAH 1: Deploy Backend ke Render.com
+### 2️⃣ Deploy Aplikasi (3 menit)
 
-### A. Persiapan File Backend
-Pastikan file berikut sudah ada (sudah saya buatkan):
-- ✅ `Procfile` 
-- ✅ `runtime.txt`
-- ✅ `backend/requirements.txt`
-- ✅ `backend/requirements_production.txt`
+#### A. Import Project
+1. Di Vercel Dashboard, klik **"Add New..."** → **"Project"**
+2. Pilih repository **"AKSARASA"** dari GitHub
+3. Klik **"Import"**
 
-### B. Deploy ke Render
-1. Login ke https://dashboard.render.com
-2. Klik **"New +"** → **"Web Service"**
-3. Connect repository GitHub Anda
-4. Pilih repository **aksarasa**
-5. Konfigurasi:
-   ```
-   Name: aksarasa-backend
-   Region: Singapore (terdekat)
-   Branch: main
-   Root Directory: backend
-   Runtime: Python 3
-   Build Command: pip install -r requirements.txt -r requirements_production.txt
-   Start Command: gunicorn server:app --bind 0.0.0.0:$PORT
-   Instance Type: Free
-   ```
-
-6. **Environment Variables** (klik "Add Environment Variable"):
-   ```
-   GEMINI_API_KEY = <your-gemini-api-key>
-   PYTHON_VERSION = 3.11.0
-   ```
-
-7. Klik **"Create Web Service"**
-8. Tunggu ~5-10 menit sampai deploy selesai
-9. **COPY URL backend Anda**, contoh: `https://aksarasa-backend.onrender.com`
-
-### C. Test Backend
-Buka di browser: `https://aksarasa-backend.onrender.com/`
-
-Harus muncul:
-```json
-{
-  "status": "online",
-  "message": "Museum AI Backend Server",
-  "api_configured": true
-}
+#### B. Konfigurasi Project
+```
+Framework Preset: Other
+Root Directory: ./
+Build Command: (kosongkan atau "echo 'No build'")
+Output Directory: frontend
+Install Command: pip install -r backend/requirements.txt
 ```
 
----
+#### C. Environment Variables
+Klik **"Environment Variables"**, tambahkan:
 
-## 🌐 LANGKAH 2: Deploy Frontend ke Netlify
+| Key | Value |
+|-----|-------|
+| `GEMINI_API_KEY` | `<paste-api-key-anda>` |
 
-### A. Update URL Backend di Frontend
-1. Buka file `frontend/script.js`
-2. Cari baris ke-3, ganti URL backend:
-   ```javascript
-   const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-       ? 'http://127.0.0.1:5000'
-       : 'https://aksarasa-backend.onrender.com'; // ← GANTI INI dengan URL backend Anda
-   ```
+Dapatkan API key di: https://makersuite.google.com/app/apikey
 
-3. Save dan commit:
-   ```bash
-   git add frontend/script.js
-   git commit -m "Update backend URL untuk production"
-   git push
-   ```
-
-### B. Deploy ke Netlify
-
-#### Cara 1: Via GitHub (RECOMMENDED)
-1. Login ke https://app.netlify.com
-2. Klik **"Add new site"** → **"Import an existing project"**
-3. Pilih **GitHub** → Pilih repository **aksarasa**
-4. Konfigurasi:
-   ```
-   Branch to deploy: main
-   Base directory: (kosongkan)
-   Build command: (kosongkan atau echo "No build")
-   Publish directory: frontend
-   ```
-5. Klik **"Deploy site"**
-6. Tunggu ~1-2 menit
-7. Netlify akan generate URL random, contoh: `https://silly-cupcake-123abc.netlify.app`
-
-#### Cara 2: Via Drag & Drop
-1. Login ke https://app.netlify.com
-2. Drag & drop folder `frontend` ke area "Want to deploy a new site without connecting to Git?"
-3. Tunggu upload selesai
-4. Copy URL yang diberikan
-
-### C. Custom Domain (OPSIONAL)
-1. Di Netlify Dashboard → **Site settings** → **Domain management**
-2. Klik **"Options"** → **"Edit site name"**
-3. Ganti nama: `aksarasa-museum` → URL jadi: `https://aksarasa-museum.netlify.app`
+#### D. Deploy!
+1. Klik **"Deploy"**
+2. Tunggu ~2-3 menit
+3. Selesai! ✅
 
 ---
 
-## ✅ SELESAI! Aplikasi Anda Sudah Online
+### 3️⃣ Dapatkan URL Aplikasi
 
-### URL Anda:
-- **Frontend**: `https://your-site-name.netlify.app`
-- **Backend**: `https://aksarasa-backend.onrender.com`
+Setelah deploy selesai, Vercel akan memberikan URL seperti:
+```
+https://aksarasa.vercel.app
+```
 
----
+atau
 
-## 🔧 Troubleshooting
+```
+https://aksarasa-xxx123.vercel.app
+```
 
-### Problem: Backend error "API key not configured"
-**Solusi**: 
-- Pastikan sudah set `GEMINI_API_KEY` di Render Environment Variables
-- Restart service di Render Dashboard
-
-### Problem: Frontend tidak bisa connect ke backend
-**Solusi**:
-1. Cek apakah backend URL di `script.js` sudah benar
-2. Test backend URL di browser, harus return JSON status
-3. Cek CORS - pastikan backend ada `CORS(app, resources={r"/*": {"origins": "*"}})`
-
-### Problem: Render backend sleep setelah 15 menit idle
-**Ini normal di Free Plan**. Backend akan otomatis bangun saat ada request (butuh 30-60 detik first load).
-
-**Solusi**: Upgrade ke Paid Plan ($7/bulan) untuk always-on server.
-
-### Problem: Audio tidak muncul
-**Solusi**:
-- Cek Environment Variable `GEMINI_API_KEY` sudah benar
-- Cek logs di Render Dashboard untuk error TTS
-- Pastikan package `gTTS` terinstall
+**Aplikasi Anda sudah online dan bisa diakses publik!** 🎉
 
 ---
 
-## 📱 Update Aplikasi Setelah Deploy
+## 🔧 Custom Domain (OPSIONAL)
+
+### Ubah Nama Project
+1. Di Vercel Dashboard → Project Settings
+2. Klik **"Domains"**
+3. Tambahkan domain custom (jika punya) atau edit vercel subdomain:
+   - Ketik: `aksarasa-museum` 
+   - URL jadi: `https://aksarasa-museum.vercel.app`
+
+---
+
+## 📱 Test Aplikasi
+
+1. Buka URL Vercel Anda
+2. Test scan barcode (MUSEUM001, MUSEUM002, dst)
+3. Test chat dengan AI
+4. Test audio guide
+
+---
+
+## 🔄 Update Aplikasi
 
 Setiap kali ada perubahan code:
 
 ```bash
-# 1. Edit file yang perlu diubah
+# 1. Edit file yang diperlukan
 # 2. Commit & push
 git add .
-git commit -m "Deskripsi perubahan"
+git commit -m "Update fitur baru"
 git push
 
-# 3. Netlify & Render akan auto-deploy otomatis!
+# 3. Vercel akan auto-deploy! (30 detik)
 ```
+
+---
+
+## 🆚 Vercel vs Render.com
+
+| Fitur | Vercel | Render.com |
+|-------|--------|------------|
+| **Harga** | GRATIS | GRATIS |
+| **Setup** | 1 platform | 2 platform (Netlify + Render) |
+| **Cold Start** | ❌ Tidak ada | ⚠️ ~30 detik |
+| **Global CDN** | ✅ Ya | ❌ Tidak |
+| **Auto Deploy** | ✅ Ya | ✅ Ya |
+| **Custom Domain** | ✅ Gratis | ⚠️ Paid only |
+| **Serverless Functions** | ✅ Ya | ⚠️ Terbatas |
+
+**Rekomendasi: Vercel lebih mudah dan performa lebih baik!** 🚀
+
+---
+
+## ⚠️ Catatan Penting Vercel
+
+### Batasan Free Plan:
+- **Bandwidth**: 100GB/bulan (cukup untuk ribuan visitor)
+- **Serverless Function Execution**: 100GB-hours/bulan
+- **Function Duration**: Max 10 detik per request (cukup untuk chatbot)
+
+### Jika Function Timeout:
+Audio generation (TTS) kadang lambat. Jika error, coba:
+1. Reduce audio quality di `server.py`
+2. Atau gunakan audio pre-generated
+3. Atau upgrade ke Pro plan ($20/bulan)
+
+---
+
+## 🆘 Troubleshooting
+
+### Error: "Module not found"
+**Solusi**: Pastikan `backend/requirements.txt` lengkap
+```bash
+cd backend
+pip freeze > requirements.txt
+git add requirements.txt
+git commit -m "Update requirements"
+git push
+```
+
+### Error: "Function timeout"
+**Solusi**: TTS generation terlalu lama. Vercel free plan limit 10 detik.
+- Matikan TTS untuk sementara, atau
+- Pre-generate audio files
+
+### Error: "API key not configured"
+**Solusi**: 
+1. Vercel Dashboard → Project → Settings → Environment Variables
+2. Pastikan `GEMINI_API_KEY` sudah di-set
+3. Redeploy: Deployments → ... → Redeploy
+
+---
+
+## 📋 Checklist Deploy Vercel
+
+- [ ] Code sudah di-push ke GitHub
+- [ ] Akun Vercel sudah dibuat & connected ke GitHub
+- [ ] Import project AKSARASA ke Vercel
+- [ ] Set Environment Variable `GEMINI_API_KEY`
+- [ ] Deploy berhasil (tunggu ~2-3 menit)
+- [ ] Test aplikasi di URL Vercel
+- [ ] Test scan barcode
+- [ ] Test chat AI
+- [ ] Share link ke teman! 🎉
 
 ---
 
 ## 💰 Biaya
 
-### GRATIS (Free Tier):
-- **Netlify**: 100GB bandwidth/bulan, unlimited sites
-- **Render**: 750 jam/bulan (cukup untuk 1 bulan non-stop)
-
-### Batasan Free Tier:
-- ⚠️ Backend sleep setelah 15 menit tidak ada traffic
-- ⚠️ Cold start ~30-60 detik saat backend bangun
+### GRATIS SELAMANYA untuk:
+- Personal projects
+- Unlimited websites
+- 100GB bandwidth/bulan
+- Auto SSL
+- Global CDN
 
 ### Upgrade (OPSIONAL):
-- **Render Paid**: $7/bulan untuk always-on server
-- **Netlify Pro**: $19/bulan untuk analytics & password protection
+- **Pro**: $20/bulan untuk team collaboration & unlimited bandwidth
 
 ---
 
-## 🆘 Butuh Bantuan?
+## 🎯 Kesimpulan
 
-1. Cek logs di Render: **Dashboard → Your Service → Logs**
-2. Cek logs di Netlify: **Site → Deploys → Deploy log**
-3. Test backend API manual di browser atau Postman
-
----
-
-## 📋 Checklist Deploy
-
-- [ ] Backend di-push ke GitHub
-- [ ] Backend deployed ke Render
-- [ ] Environment variable `GEMINI_API_KEY` sudah di-set di Render
-- [ ] Backend URL sudah di-copy
-- [ ] Frontend `script.js` sudah update backend URL
-- [ ] Frontend deployed ke Netlify
-- [ ] Test scan barcode di frontend
-- [ ] Test chat AI di frontend
-- [ ] Share URL ke teman/public! 🎉
+**Vercel adalah pilihan TERBAIK untuk Aksarasa karena:**
+1. ✅ Deploy frontend + backend dalam 1 platform
+2. ✅ Tidak ada cold start (always fast)
+3. ✅ Auto deploy dari GitHub
+4. ✅ 100% GRATIS
+5. ✅ Setup super mudah (~5 menit)
 
 ---
 
-**Selamat! Aplikasi museum Anda sekarang bisa diakses dari mana saja! 🚀🎉**
+**Selamat! Aplikasi museum Anda siap diakses dunia!** 🌍🎉
+
+**URL:** `https://aksarasa.vercel.app` (ganti dengan URL Anda)
