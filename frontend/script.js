@@ -1,7 +1,7 @@
 // API Configuration
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://127.0.0.1:5000'
-    : ''; // Kosongkan untuk Vercel (same origin)
+    : ''; // Empty = same origin (Vercel akan handle routing)
 
 // Museum Database with detailed info (Multi-language)
 const museumDatabase = {
@@ -165,6 +165,17 @@ const translations = {
         backendError: "❌ Sorry, an error occurred while contacting the AI server"
     }
 };
+
+// Helper function to convert base64 to Blob
+function base64ToBlob(base64, mimeType) {
+    const byteCharacters = atob(base64);
+    const byteArrays = [];
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteArrays.push(byteCharacters.charCodeAt(i));
+    }
+    const byteArray = new Uint8Array(byteArrays);
+    return new Blob([byteArray], { type: mimeType });
+}
 
 // State Management
 let scanHistory = [];
@@ -786,15 +797,23 @@ async function sendMessage() {
         if (data.success) {
             addMessageToChat('ai', data.response);
 
-            // 🔊 Jika ada audio_url, mainkan suaranya
-            if (data.audio_url) {
-                // Hentikan audio sebelumnya jika masih berjalan
+            // 🔊 Jika ada audio (base64 atau URL), mainkan suaranya
+            if (data.audio_base64) {
+                // Audio dari Vercel (base64)
                 if (currentAudio) {
                     currentAudio.pause();
                     currentAudio.currentTime = 0;
                 }
-                
-                // Buat dan simpan referensi audio baru
+                const audioBlob = base64ToBlob(data.audio_base64, 'audio/mpeg');
+                const audioUrl = URL.createObjectURL(audioBlob);
+                currentAudio = new Audio(audioUrl);
+                currentAudio.play().catch(err => console.warn("Gagal memutar audio:", err));
+            } else if (data.audio_url) {
+                // Audio dari server biasa (URL)
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
                 currentAudio = new Audio(`${API_BASE_URL}${data.audio_url}`);
                 currentAudio.play().catch(err => console.warn("Gagal memutar audio:", err));
             }
